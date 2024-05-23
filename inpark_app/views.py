@@ -19,10 +19,10 @@ class Signup(APIView):
             username=data.get('username'),
             password=data.get('password'),
             email=data.get('email'),
-            first_name=data.get('first_name'),
-            last_name=data.get('last_name'),
-            nationalID=data.get('nationalID'),
-            phone_number=data.get('phone_number')
+            first_name=data.get('first_name', "null"),
+            last_name=data.get('last_name', "null"),
+            nationalID=data.get('nationalID', "null"),
+            phone_number=data.get('phone_number', "null")
         )
         return Response({"message": "User created successfully"}, status=status.HTTP_201_CREATED)
     
@@ -46,7 +46,6 @@ class VehicleCreate(APIView):
         car_reg = request.data.get('car_reg')
         color = request.data.get('color')
         type = request.data.get('type')
-
 
         if request.user.is_authenticated:
             vehicle = Vehicle(car_reg=car_reg, color=color, type=type, owner=request.user)
@@ -113,7 +112,6 @@ class LeaveParking(APIView):
             return Response({"message": "Unable to leave parking. Your parking session has already been terminated"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class ExtendParking(APIView):
     permission_classes = [IsAuthenticated]
     
@@ -152,7 +150,6 @@ class ExtendParking(APIView):
                 return Response({"detail": "Authentication credentials were not provided."}, status=status.HTTP_401_UNAUTHORIZED)
         else:
             return Response({"message": "Cannot extend a terminated parking session!"}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
 
 
 class LogoutView(APIView):
