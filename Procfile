@@ -1,0 +1,1 @@
+ web: gunicorn inpark_project.wsgi

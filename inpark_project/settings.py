@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-^16@^40d(+i#rlrm!j(r7qnyfsp31d6m0h78@mt!r*7sc1_)b(
 DEBUG = True
 
 ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ["campus-autolink-012bf832663f.herokuapp.com", "ampus-autolink-api.com", "127.0.0.1"]
 
 
 # Application definition
