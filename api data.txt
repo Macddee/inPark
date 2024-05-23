@@ -1,0 +1,61 @@
+create vehicle endpoind.
+requres:
+    {
+    "color": "black",
+    "type": "car",
+    "car_reg": "xyz 0000"
+    }
+
+returns:
+    {
+    "color": "black",
+    "type": "car",
+    "car_reg": "xyz 0000"
+    }
+__________________________________________________________________________________________________
+
+Signup endpoint
+requres:
+{
+    "username": "user1",            NOT NULL
+    "password": "user1234",         NOT NULL
+    "email": "user@gmail.com",      NOT NULL
+    "first_name": "mac",
+    "last_name": "dee",
+    "nationalID": "42-0772004H42",
+    "phone_number": "0783773993"
+}
+
+returns:
+    NONE
+
+__________________________________________________________________________________________________
+
+process parking endpooint 
+required:
+{
+    "address": "xyz Road",
+    "duriation": 3,
+    "parking_number": 1123,
+    "price": 3.0
+}
+
+returns:
+[
+    {
+        "message": "Parking slot successifuly booked!"
+    },
+    {
+        "response": {
+            "id": 28,
+            "owner": 1,
+            "address": "kmn Road",
+            "duriation": 3,
+            "parking_status": "Ongoing",
+            "parking_number": 1123,
+            "price": 3,
+            "entryTime": "2024-05-23T01:00:57.612860Z",
+            "exitTime": "2024-05-23T01:13:57.612860Z"
+        }
+    }
+]
