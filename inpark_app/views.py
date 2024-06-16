@@ -8,9 +8,33 @@ from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from django.forms import model_to_dict
 from django.core.exceptions import ObjectDoesNotExist
-from django.db import transaction
+from rest_framework.decorators import api_view
+
 
 User = get_user_model()
+
+
+@api_view(["GET"])
+def home(request):
+    context = [
+        "AVAILABLE ENDPOINDS::",
+    
+        "https://inpark-api-331214075983.herokuapp.com/signup/",
+        "https://inpark-api-331214075983.herokuapp.com/login/",
+        "https://inpark-api-331214075983.herokuapp.com/logout/",
+        "https://inpark-api-331214075983.herokuapp.com/create-vehicle/",
+        "https://inpark-api-331214075983.herokuapp.com/process-parking/",
+        "https://inpark-api-331214075983.herokuapp.com/leave-parking/",
+        "https://inpark-api-331214075983.herokuapp.com/extend-parking/",
+        "https://inpark-api-331214075983.herokuapp.com/user-information/",
+        "https://inpark-api-331214075983.herokuapp.com/parking-history/",
+
+        {"Information available for public disclosure 01": "API endpoints to only be consumed with the inparker android app and inpaker web."},
+        {"Information available for public disclosure 02": "email <<macddeemanana@gmail.com>> for the API Docs"},
+
+    ]
+
+    return Response(context)
 
 class Signup(APIView):
     def post(self, request):
@@ -51,7 +75,7 @@ class VehicleCreate(APIView):
             vehicle = Vehicle(car_reg=car_reg, color=color, type=type, owner=request.user)
             vehicle.save()
             vehicle_dict = model_to_dict(vehicle)
-            return Response([{"message": "Vehicle created successfully"}, {"response":vehicle_dict}], status=status.HTTP_201_CREATED)
+            return Response(vehicle_dict, status=status.HTTP_201_CREATED)
         else:
             return Response({"detail": "Authentication credentials were not provided."}, status=status.HTTP_401_UNAUTHORIZED)
 
@@ -63,7 +87,8 @@ class ProcessParking(APIView):
         address = request.data.get('address')
         duriation = request.data.get('duriation')
         parking_number = request.data.get('parking_number')
-        price = request.data.get('price')
+        price = request.data.get('price'),
+        account = Parking.objects.get()
 
         if request.user.is_authenticated:
             processed_parking = Parking(
@@ -157,3 +182,25 @@ class LogoutView(APIView):
         logout(request)
         return Response({"message": "User logged out successfully"}, status=status.HTTP_200_OK)
     
+class UserDataView(APIView):
+    def get(self, request):
+        user_info = get_object_or_404(
+        Motorist,
+        pk=request.user.id
+        )
+        user_info_serializer = MotoristSerializer(user_info,)
+        responseData = [user_info_serializer.data]  
+        return Response(responseData, status=status.HTTP_200_OK)
+
+
+class ParkHistoryView(APIView):
+    def get(self, request):
+        history = Parking.objects.filter(owner_id=request.user.id)
+
+        history_api = ParkingSerializer(history, many=True)
+
+        if history_api.data:
+            responseData = [history_api.data]
+            return Response(responseData, status=status.HTTP_200_OK)
+        else:
+            return Response("No parking history data found.")

@@ -33,14 +33,38 @@ ________________________________________________________________________________
 
 process parking endpooint 
 required:
-{
+
+
+returns:
+
+
+
+https://inpark-api-331214075983.herokuapp.com/login/
+https://inpark-api-331214075983.herokuapp.com/signup/
+https://inpark-api-331214075983.herokuapp.com/logout/
+https://inpark-api-331214075983.herokuapp.com/create-vehicle/
+takes : {
+"color": "red",
+"type": "bus",
+"car_reg": "xyz 2024"
+}
+
+retuns: {
+    "id": 7,
+    "owner": 1,
+    "car_reg": "xyz 2024",
+    "color": "red",
+    "type": "bus"
+}
+
+https://inpark-api-331214075983.herokuapp.com/process-parking/
+takes : {
     "address": "xyz Road",
     "duriation": 3,
     "parking_number": 1123,
     "price": 3.0
 }
-
-returns:
+        
 [
     {
         "message": "Parking slot successifuly booked!"
@@ -59,3 +83,14 @@ returns:
         }
     }
 ]
+
+https://inpark-api-331214075983.herokuapp.com/leave-parking/
+takes: {"id": 25} // the id returned when py process parking is the one you use
+
+returns: {
+    "message": "Parking slot successfuly freed!"
+}
+
+https://inpark-api-331214075983.herokuapp.com/extend-parking/
+https://inpark-api-331214075983.herokuapp.com/user-information/
+https://inpark-api-331214075983.herokuapp.com/parking-history/

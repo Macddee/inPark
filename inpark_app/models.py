@@ -7,6 +7,11 @@ from django.utils import timezone
 class Motorist(AbstractUser):
     nationalID = models.CharField(max_length=13)
     phone_number = models.CharField(max_length=15)
+    account = models.DecimalField(
+        decimal_places=2,
+        max_digits=9999999,
+        default=200,
+        )
 
 
 class Vehicle(models.Model):
